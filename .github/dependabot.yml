@@ -6,9 +6,3 @@ updates:
       # Check for npm/yarn dependency updates every weekday at 08:00 UTC
       interval: "daily"
       time: "08:00"
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      # Check for updates to GitHub Actions every weekday at 08:00 UTC
-      interval: "daily"
-      time: "08:00"
