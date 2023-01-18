@@ -35,9 +35,7 @@ interface principalEnpointReport {
 export class Principal {
 
 	runprocessGetMetricsEndpoint(messageService: MessageService): void {
-		if(SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL!='' &&
-					SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectToken!='' &&
-					SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey!=''){
+		if(SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL!='' ){
 			//remove previous
 			var lengthData= SmartclideTdReusabilityTheiaWidget.statePrincipalEndpoints.length;
 			for(let count=0; count<lengthData; count++){
@@ -57,6 +55,11 @@ export class Principal {
 				}
 			}
 
+			//get sonarQubeProjectKey
+			var temp= SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL.replace('.git','').split('/');
+			var principalSonarQubeProjectKey= temp[temp.length-2] +":"+ temp[temp.length-1];
+			console.log('sonarQubeProjectKey: '+ principalSonarQubeProjectKey);
+
 			//start
 			if(SmartclideTdReusabilityTheiaWidget.statePrincipalEndpoints.length>0 &&
 						(document.getElementById("listManualEndpoints") as HTMLElement).style.display == "block"){
@@ -67,7 +70,7 @@ export class Principal {
 				var principalReportEndpoints: principalEnpointReport[] = [];
 				var dataManual;
 				dataManual={
-					sonarQubeProjectKey: SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey,
+					sonarQubeProjectKey: principalSonarQubeProjectKey,
 					gitUrl: SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL,
 					gitToken: SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectToken,
 					requestBodyEachEndpointList : SmartclideTdReusabilityTheiaWidget.statePrincipalEndpoints
@@ -103,7 +106,7 @@ export class Principal {
 				var principalReportEndpoints: principalEnpointReport[] = [];
 				var dataManual;
 				dataManual={
-					sonarQubeProjectKey: SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey,
+					sonarQubeProjectKey: principalSonarQubeProjectKey,
 					gitUrl: SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL,
 					gitToken: SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectToken
 				};
@@ -249,14 +252,14 @@ export class Principal {
     //Get metrics for TD principal
     runprocessGetMetrics(messageService: MessageService): void {
 		//if field has value
-		if(SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey!=''){
-			console.log('url: '+ SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey);
-			//var temp= SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL.replace('.git','').split('/');
-			//var projectName= temp[temp.length-1];
-			var projectName= SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey;
+		if(SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL!=''){
+			console.log('url: '+ SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL);
+			var temp= SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL.replace('.git','').split('/');
+			var sonarQubeProjectKey= temp[temp.length-2] +":"+ temp[temp.length-1];
+			console.log('sonarQubeProjectKey: '+ sonarQubeProjectKey);
 			//GET measures TD and number of issues
 			console.log("token: "+SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken);
-			fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+'/td-principal/analysis/'+ projectName +'/measures', 
+			fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+'/td-principal/analysis/'+ sonarQubeProjectKey +'/measures', 
 				{
 					method: 'get',
 					headers: {
@@ -296,7 +299,7 @@ export class Principal {
 					//if(issues<10000){
 					//	console.log(pages);
 					//	for(let i=1; i<=pages; i++){
-							this.runprocessGetIssues();//i);
+							this.runprocessGetIssues(sonarQubeProjectKey);//i);
 					//	}
 					//}
 				})
@@ -313,14 +316,13 @@ export class Principal {
 	}
 
 	//Get Issues for given page
-	runprocessGetIssues():void{ //page: number): void {
+	runprocessGetIssues(sonarQubeProjectKey:string):void{ //page: number): void {
 		//console.log('page:::'+page);
 		//var temp= SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL.replace('.git','').split('/');
 		//var projectName= temp[temp.length-1];
-		var projectName= SmartclideTdReusabilityTheiaWidget.state.PrincipalSonarQubeProjectKey;
 
 		//GET
-		fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+'/td-principal/analysis/'+ projectName +'/issues', 
+		fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+'/td-principal/analysis/'+ sonarQubeProjectKey +'/issues', 
 			{
 				method: 'get',
 				headers: {

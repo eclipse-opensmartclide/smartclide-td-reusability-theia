@@ -37,7 +37,6 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		InterestProjectHasToken: '',
 		InterestProjectToken: '',
 		PrincipalProjectToken: '',
-		PrincipalSonarQubeProjectKey: '',
 		InterestFileNumber: '',
 		ReusabilityProjectURL: '',
 		stateKeycloakToken: ''
@@ -121,7 +120,6 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 			<div id='td-principal'>
 				<AlertMessage type='INFO' header={header} />
 				<input onChange={this.updateInput} placeholder='Project URL' name='PrincipalProjectURL'/>
-				<input id='principalSonarQubeProjectKey' onChange={this.updateInput} placeholder='SonarQube Project Key' name='PrincipalSonarQubeProjectKey'/>
 				<label className='checkboxLabel'>
 					<input type="checkbox" onChange={this.onCheckBoxChangePrincipalPrivate}/>Is private
 				</label>
@@ -139,8 +137,8 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 					</ul>
 				</div>
 				<button className='theia-button secondary' title='New Analysis' onClick={_a => principalInstance.runprocessNewAnalysis(this.messageService)} style={{display:"block", marginTop:"5px", marginBottom:"5px",}}>New Analysis</button>
-				<button className='theia-button secondary' title='Load Last Analysis' onClick={_a => principalInstance.runprocessGetMetrics(this.messageService)}>Project Analysis</button>
-				<button className='theia-button secondary' title='Enpoint Analysis' onClick={_a => principalInstance.runprocessGetMetricsEndpoint(this.messageService)}>Enpoint Analysis</button>
+				<button className='theia-button secondary' title='Load Last Project Analysis' onClick={_a => principalInstance.runprocessGetMetrics(this.messageService)}>Get Project Analysis</button>
+				<button className='theia-button secondary' title='Load Last Enpoint Analysis' onClick={_a => principalInstance.runprocessGetMetricsEndpoint(this.messageService)}>Get Enpoint Analysis</button>
 				<div id='waitAnimation' className="lds-dual-ring"></div>
 				<div id='TdProjectResults'>
 					<p id='TDIndex' style={{marginLeft:'10px', display:'block'}}></p>
@@ -157,7 +155,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 					<input type="checkbox" onChange={this.onCheckBoxChange}/>Is private (for new analysis)
 				</label>
 				<input id='interestProjectToken' onChange={this.updateInput} placeholder='Project Token' name='InterestProjectToken'/>
-				<button className='theia-button secondary' title='Load Interest' onClick={_a => interestInstance.runprocessGetInterest(this.messageService)}>Load Interest</button>
+				<button className='theia-button secondary' title='Load Interest till last analysis' onClick={_a => interestInstance.runprocessGetInterest(this.messageService)}>Load Interest</button>
 				<button className='theia-button secondary' title='Analyze Interest' onClick={_a => interestInstance.runprocessAnalyzeInterest(this.messageService)}>Analyze Interest</button>
 				<p id='TDIndexInterest'></p>
 				<div id='interest-buttons' className='ShowHide-buttons'>
@@ -170,7 +168,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 			<div id='reusability'>
 				<AlertMessage type='INFO' header={header3} />
 				<input onChange={this.updateInput} placeholder='Project URL' name='ReusabilityProjectURL'/>
-				<button className='theia-button secondary' title='Load Reusability' onClick={_a => reusabilityInstance.runprocessLoadReusability(this.messageService)}>Load Reusability</button>
+				<button className='theia-button secondary' title='Get Reusability Analysis' onClick={_a => reusabilityInstance.runprocessLoadReusability(this.messageService)}>Get Reusability Analysis</button>
 				<p id='indexReusability'></p>
 				<div id='reusability-buttons' className='ShowHide-buttons'>
 					<button id='reusability-ShowHideFiles' className='theia-button secondary' title='Hide Files' onClick={_a => reusabilityInstance.runprocessShowFiles()}>Hide Files</button>
