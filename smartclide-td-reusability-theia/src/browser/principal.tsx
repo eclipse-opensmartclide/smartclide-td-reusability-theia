@@ -11,6 +11,7 @@
 
 import { SmartclideTdReusabilityTheiaWidget } from './smartclide-td-reusability-theia-widget';
 import { MessageService } from '@theia/core';
+import { BackendService } from '../common/protocol';
 
 interface metrics{
 	name: string;
@@ -34,7 +35,11 @@ interface principalEnpointReport {
 
 export class Principal {
 
-	runprocessGetMetricsEndpoint(messageService: MessageService): void {
+	async runprocessGetMetricsEndpoint(messageService: MessageService, helloBackendService: BackendService): Promise<void> {
+		var tmp = await helloBackendService.getEnvironmentVariable();
+		console.log(""+tmp);
+
+
 		if(SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL!='' ){
 			//remove previous
 			var lengthData= SmartclideTdReusabilityTheiaWidget.statePrincipalEndpoints.length;

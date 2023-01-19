@@ -22,6 +22,7 @@ import { Reusability} from './reusability';
 import * as echarts from 'echarts';
 import { messageTypes, buildMessage } from '@unparallel/smartclide-frontend-comm';
 import { Message } from '@theia/core/lib/browser';
+import { BackendService } from '../common/protocol';
 
 
 @injectable()
@@ -72,6 +73,9 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 
     @inject(MessageService)
     protected readonly messageService!: MessageService;
+	
+	@inject(BackendService)
+	private readonly backendService: BackendService;
 
     @postConstruct()
     protected async init(): Promise < void> {
@@ -138,7 +142,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 				</div>
 				<button className='theia-button secondary' title='New Analysis' onClick={_a => principalInstance.runprocessNewAnalysis(this.messageService)} style={{display:"block", marginTop:"5px", marginBottom:"5px",}}>New Analysis</button>
 				<button className='theia-button secondary' title='Load Last Project Analysis' onClick={_a => principalInstance.runprocessGetMetrics(this.messageService)}>Get Project Analysis</button>
-				<button className='theia-button secondary' title='Load Last Enpoint Analysis' onClick={_a => principalInstance.runprocessGetMetricsEndpoint(this.messageService)}>Get Enpoint Analysis</button>
+				<button className='theia-button secondary' title='Load Last Enpoint Analysis' onClick={_a => principalInstance.runprocessGetMetricsEndpoint(this.messageService,this.backendService)}>Get Enpoint Analysis</button>
 				<div id='waitAnimation' className="lds-dual-ring"></div>
 				<div id='TdProjectResults'>
 					<p id='TDIndex' style={{marginLeft:'10px', display:'block'}}></p>

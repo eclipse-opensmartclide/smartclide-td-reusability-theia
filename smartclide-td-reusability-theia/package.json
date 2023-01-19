@@ -29,7 +29,8 @@
   "license": "EPL-2.0",
   "theiaExtensions": [
     {
-      "frontend": "lib/browser/smartclide-td-reusability-theia-frontend-module"
+      "frontend": "lib/browser/smartclide-td-reusability-theia-frontend-module",
+      "backend": "lib/node/test-backend-module"
     }
   ]
 }
