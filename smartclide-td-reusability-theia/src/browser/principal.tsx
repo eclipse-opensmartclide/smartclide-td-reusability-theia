@@ -382,9 +382,18 @@ export class Principal {
 			(document.getElementById("waitAnimation") as HTMLElement).style.display = "block";
 
 			var dataNewAnalysis;
-			dataNewAnalysis={
-				gitURL: SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL
-			};
+			if(SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectToken!=""){
+				dataNewAnalysis={
+					gitURL: SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL
+				};
+			}
+			else{
+				dataNewAnalysis={
+					gitURL: SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectURL,
+					token: SmartclideTdReusabilityTheiaWidget.state.PrincipalProjectToken
+				};
+			}
+			
 			(async () => {
 				try {
 					var principalEnd = await Principal.postPrincipalNewAnalysis(dataNewAnalysis);
@@ -408,7 +417,7 @@ export class Principal {
 		}
 	}
 
-	static async postPrincipalNewAnalysis(data: { gitURL:string; } ): Promise<number> {
+	static async postPrincipalNewAnalysis(data: { gitURL:string; } | {gitURL:string, token:string}): Promise<number> {
 		const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
 				'/td-principal/analysis', { method: 'post',
 			headers: {
