@@ -16,6 +16,7 @@ import { MessageService } from '@theia/core';
 import { Interest} from './interest';
 import { Principal} from './principal';
 import { Reusability} from './reusability';
+import {Security} from './security';
 //import Chart from './chart';
 //import ReactDOM = require('react-dom');
 //import ResizeObserver from 'react-resize-observer';
@@ -40,6 +41,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		PrincipalProjectToken: '',
 		InterestFileNumber: '',
 		ReusabilityProjectURL: '',
+		SecurityProjectURL: '',
 		stateKeycloakToken: ''
 	}
 	
@@ -51,6 +53,10 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 	
 	static stateReusability ={
 		data: [[0, 0]]
+	}
+
+	static stateSecurity ={
+		data: []
 	}
 
 	static myChart:any;
@@ -104,10 +110,12 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
         const header = `Provide SonarQube URL instance and get latest results.`;
         const header2 = `Provide git URL and get latest results.`;
         const header3 = `Provide git URL and get results.`;
+		const header4 = `Provide git URL and get results.`;
 		
 		const interestInstance= new Interest();
 		const principalInstance= new Principal();
 		const reusabilityInstance= new Reusability();
+		const securityInstance= new Security();
 
 		/**
 		 	<ResizeObserver
@@ -120,6 +128,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 				<li><span id='menuPrincipal' className='active' onClick={_a => this.clickMenu('menuPrincipal','td-principal')}>TD Principal</span></li>
 				<li><span id='menuInterest' onClick={_a => this.clickMenu('menuInterest','td-interest')}>TD Interest</span></li>
 				<li><span id='menuReusability' onClick={_a => this.clickMenu('menuReusability','reusability')}>Reusability</span></li>
+				<li><span id='menuSecurity' onClick={_a => this.clickMenu('menuSecurity','security')}>Security</span></li>
 			</ul>
 			<div id='td-principal'>
 				<AlertMessage type='INFO' header={header} />
@@ -181,7 +190,19 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 				<div id='chartReusability' className='chart'></div>
 				<div id='filesReusability'></div>
 			</div>
-			
+			<div id='security'>
+				<AlertMessage type='INFO' header={header4} />
+				<input onChange={this.updateInput} placeholder='Project URL' name='SecurityProjectURL'/>
+				<select id="select-security-language" style={{marginLeft:'10px'}}>
+					<option value="Java">Java</option>
+					<option value="Python">Python</option>
+					<option value="JavaScript">JavaScript</option>
+				</select>
+				<button className='theia-button secondary' title='Make Security Analysis' onClick={_a => securityInstance.runprocessAnalyzeSecurity(this.messageService)}>Make Security Analysis</button>
+				<div id='waitAnimationSecurity' className="lds-dual-ring"></div>
+				<p id='indexSecurity'></p>
+				<div id='resultsSecurity'></div>
+			</div>
 		</div>
     }
 
@@ -215,12 +236,14 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		document.getElementById('menuPrincipal')!.className='';
 		document.getElementById('menuInterest')!.className='';
 		document.getElementById('menuReusability')!.className='';
+		document.getElementById('menuSecurity')!.className='';
 		document.getElementById(menuItem)!.className='active';
 		
 		//change appearance
 		(document.getElementById("td-principal") as HTMLElement).style.display = "none";
 		(document.getElementById("td-interest") as HTMLElement).style.display = "none";
 		(document.getElementById("reusability") as HTMLElement).style.display = "none";
+		(document.getElementById("security") as HTMLElement).style.display = "none";
 		(document.getElementById(divId) as HTMLElement).style.display = "block";
 	}
 	

@@ -59,6 +59,11 @@
   	width: 95%;
 }
 
+/* Security */
+#security{
+	display: none;
+}
+
 /* TD Principal */
 #endpointResultsList{
 	display: none;
