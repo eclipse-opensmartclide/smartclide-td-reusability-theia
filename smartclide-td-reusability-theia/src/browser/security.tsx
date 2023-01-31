@@ -23,7 +23,7 @@
 		(document.getElementById("waitAnimation") as HTMLElement).style.display = "block";
 
         //Get language
-        var language = (document.getElementById("indexSecurity") as HTMLSelectElement).value;
+        var language = (document.getElementById("select-security-language") as HTMLSelectElement).value;
 
 		//Post
 		fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
@@ -41,17 +41,18 @@
             var obj= JSON.parse(JSON.stringify(out));
 
             //remove previous
-            SmartclideTdReusabilityTheiaWidget.stateSecurity.data=[];
             (document.getElementById('resultsSecurity') as HTMLElement).innerHTML= "";
+            (document.getElementById('indexSecurity') as HTMLElement).innerHTML= "";
+            (document.getElementById('chartSecurity') as HTMLElement).innerHTML= "";
             
             //parse response
             //crate HTMLElement for each file
             var count=0;
 			for(let i of obj.results){
                 var confidence= i.confidence;
-                var path= i.path.substring(i.path.dummyString.indexOf("/") + 1);
-                path= path.substring(path.dummyString.indexOf("/") + 1);
-                var vulnerable= i.vulnerable;
+                var path= i.path.substring(i.path.indexOf("/") + 1);
+                path= path.substring(path.indexOf("/") + 1);
+                var vulnerable= i.is_vulnerable;
                 
                 //add the vulnerable files only
                 if(vulnerable==1){
@@ -108,18 +109,17 @@
             },
             series: [
               {
-                name: 'Access From',
                 type: 'pie',
                 radius: ['50%', '80%'],
                 avoidLabelOverlap: false,
                 label: {
-                  show: false,
-                  position: 'center'
+                  show: true,
+                  color: 'white'
                 },
                 emphasis: {
                   label: {
                     show: true,
-                    fontSize: 15,
+                    fontSize: 10,
                     fontWeight: 'bold'
                   }
                 },
@@ -134,6 +134,6 @@
             ]
         };
         
-        option && SmartclideTdReusabilityTheiaWidget.myChart.setOption(option);
+        option && this.myChartSecurity.setOption(option);
     }
  }

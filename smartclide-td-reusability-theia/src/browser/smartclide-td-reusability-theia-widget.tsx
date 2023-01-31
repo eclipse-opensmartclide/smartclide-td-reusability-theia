@@ -55,10 +55,6 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		data: [[0, 0]]
 	}
 
-	static stateSecurity ={
-		data: []
-	}
-
 	static myChart:any;
 
 	//Handle TOKEN_INFO message from parent
@@ -194,14 +190,14 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 				<AlertMessage type='INFO' header={header4} />
 				<input onChange={this.updateInput} placeholder='Project URL' name='SecurityProjectURL'/>
 				<select id="select-security-language" style={{marginLeft:'10px'}}>
-					<option value="Maven">Java</option>
-					<option value="Python">Python</option>
-					<option value="Javascript">JavaScript</option>
+					<option value="java">Java</option>
+					<option value="python">Python</option>
+					<option value="javascript">JavaScript</option>
 				</select>
 				<button className='theia-button secondary' title='Make Security Analysis' onClick={_a => securityInstance.runprocessAnalyzeSecurity(this.messageService)}>Make Security Analysis</button>
 				<div id='waitAnimationSecurity' className="lds-dual-ring"></div>
 				<p id='indexSecurity'></p>
-				<div id='chartSecurity' style={{width:'150px', height:'150px'}}></div>
+				<div id='chartSecurity' style={{width:'100px', height:'100px', margin:'0 auto'}}></div>
 				<div id='resultsSecurity'></div>
 			</div>
 		</div>
