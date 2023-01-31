@@ -16,8 +16,283 @@
 
     myChartSecurity:any;
 
-    //Analyze Security
-	runprocessAnalyzeSecurity(messageService: MessageService){
+    /**
+     * Security Analysis Endpoint
+     * @param messageService 
+     */
+    runprocessAnalyzeSecurity(messageService: MessageService){
+        messageService.info('Security analysis started');
+        //Wait animation start
+		(document.getElementById("waitAnimation") as HTMLElement).style.display = "block";
+
+        //Get language
+        var languageFromSelect = (document.getElementById("select-security-language") as HTMLSelectElement).value;
+        var language= '';
+        if(languageFromSelect=='java'){
+            language= 'Maven';
+        }
+        else if(languageFromSelect=='python'){
+            language= 'Python';
+        }
+        else if(languageFromSelect=='javascript'){
+            language= 'Javascript';
+        }
+
+        //body in post
+         var dataManual={"CK":{"lcom":[0,0.10910936800871021,3.1849529780564267],"cbo":[0.017050298380221656,0.03692993475020107,0.5714285714285714],
+                "wmc":[0.13793103448275863,0.04986595433654195,0.2765273311897106]},"PMD":{"ExceptionHandling":[0,0.22938518010164353,12.987012987012987],
+                "Assignment":[0,0.11160028050045479,7.6923076923076929],"Logging":[0,0.05692917472098835,6.8493150684931509],
+                "NullPointer":[0,0.32358608981534067,25.966183574879229],"ResourceHandling":[0,2.201831659093579,166.66666666666667],
+                "MisusedFunctionality":[0,0.13732179935769163,4.784688995215311]},"Characteristics":{
+                "Confidentiality":[0.005,0.005,0.005,0.1,0.1,0.1,0.01,0.01,0.01,0.1,0.1,0.005,0.2,0.15,0.1],
+                    "Integrity":[0.01,0.005,0.005,0.1,0.15,0.01,0.01,0.01,0.01,0.15,0.15,0.01,0.16,0.21,0.01],
+                    "Availability":[0.005,0.005,0.01,0.1,0.01,0.01,0.2,0.3,0.01,0.01,0.01,0.3,0.01,0.01,0.01]},
+                    "metricKeys":{"vulnerabilities":[0,0.09848484848484848,4]},"Sonarqube":{"sql-injection":[0,0.013234192551328933,1.5479876160990714],
+                    "dos":[0,0.024419175132769336,2.2172949002217297],"weak-cryptography":[0,0.0015070136414874827,0.1989258006763477],
+                    "auth":[0,0.024207864640426639,3.0959752321981428],"insecure-conf":[0,0.7356100591012389,32.05128205128205]}};
+        
+        //Send Post request
+        (async () => {
+            try {
+                const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
+                    '/security/analyze?url=' +SmartclideTdReusabilityTheiaWidget.state.SecurityProjectURL+ '&language='+language, 
+                    { method: 'post',
+                    headers: {
+                        'Accept': '*/*',
+                        'Authorization': 'Bearer ' + SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken,
+                        'Access-Control-Allow-Origin': '*',
+                        'Content-Type':  'application/json'
+                    },
+                    body: JSON.stringify(dataManual)
+                });
+                var body = await response.json();
+                var obj= JSON.parse(JSON.stringify(body));
+                console.log("Endpoint alalysis finished");
+
+                //remove previous
+                (document.getElementById('metricsSecurity') as HTMLElement).innerHTML= "";
+                let metricsSecurityDiv = document.getElementById('metricsSecurity')!
+
+
+                //Security_index
+                let p_Security_index = document.createElement("p");
+                p_Security_index.appendChild(document.createTextNode("Security index: "+obj.Security_index["Security_index"]));
+                metricsSecurityDiv.appendChild(p_Security_index);
+
+
+                //SonarQube
+                let divSonarQubeCategory = document.createElement("div");
+				divSonarQubeCategory.className = 'divMetricsCategorySecurity';
+
+                let nodeComponentCategoryName = document.createElement("i");
+				nodeComponentCategoryName.appendChild(document.createTextNode("Sonarqube"));
+
+                let nodeComponentList = document.createElement("ul");
+                if(language=='Javascript' || language=='Maven'){
+                    let nodeComponentListItem1 = document.createElement("li");
+                    nodeComponentListItem1.appendChild(document.createTextNode('insecure-conf: '+obj.Sonarqube["insecure-conf"]));
+                    nodeComponentList.appendChild(nodeComponentListItem1);
+                    let nodeComponentListItem2 = document.createElement("li");
+                    nodeComponentListItem2.appendChild(document.createTextNode('auth: '+obj.Sonarqube["auth"]));
+                    nodeComponentList.appendChild(nodeComponentListItem2);
+                }
+                let nodeComponentListItem3 = document.createElement("li");
+                nodeComponentListItem3.appendChild(document.createTextNode('weak-cryptography: '+obj.Sonarqube["weak-cryptography"]));
+                nodeComponentList.appendChild(nodeComponentListItem3);
+                let nodeComponentListItem4 = document.createElement("li");
+                nodeComponentListItem4.appendChild(document.createTextNode('dos: '+obj.Sonarqube["dos"]));
+                nodeComponentList.appendChild(nodeComponentListItem4);
+                let nodeComponentListItem5 = document.createElement("li");
+                nodeComponentListItem5.appendChild(document.createTextNode('sql-injection: '+obj.Sonarqube["sql-injection"]));
+                nodeComponentList.appendChild(nodeComponentListItem5);
+
+                divSonarQubeCategory.appendChild(nodeComponentCategoryName);
+                divSonarQubeCategory.appendChild(nodeComponentList);
+
+                metricsSecurityDiv.appendChild(divSonarQubeCategory);
+
+
+                //Property_Scores
+                let divPropertyScoresCategory = document.createElement("div");
+				divPropertyScoresCategory.className = 'divMetricsCategorySecurity';
+
+                let nodeComponentCategoryName2 = document.createElement("i");
+				nodeComponentCategoryName2.appendChild(document.createTextNode("Property_Scores"));
+
+                let nodeComponentList2 = document.createElement("ul");
+                if(language=='Javascript' || language=='Maven'){
+                    let nodeComponentListItem1 = document.createElement("li");
+                    nodeComponentListItem1.appendChild(document.createTextNode('insecure-conf: '+obj.Property_Scores["insecure-conf"]));
+                    nodeComponentList2.appendChild(nodeComponentListItem1);
+                    let nodeComponentListItem2 = document.createElement("li");
+                    nodeComponentListItem2.appendChild(document.createTextNode('auth: '+obj.Property_Scores["auth"]));
+                    nodeComponentList2.appendChild(nodeComponentListItem2);
+                }
+                let nodeComponentListItem6 = document.createElement("li");
+                nodeComponentListItem6.appendChild(document.createTextNode('weak-cryptography: '+obj.Property_Scores["weak-cryptography"]));
+                nodeComponentList2.appendChild(nodeComponentListItem6);
+                let nodeComponentListItem7 = document.createElement("li");
+                nodeComponentListItem7.appendChild(document.createTextNode('dos: '+obj.Property_Scores["dos"]));
+                nodeComponentList2.appendChild(nodeComponentListItem7);
+                let nodeComponentListItem8 = document.createElement("li");
+                nodeComponentListItem8.appendChild(document.createTextNode('sql-injection: '+obj.Property_Scores["sql-injection"]));
+                nodeComponentList2.appendChild(nodeComponentListItem8);
+                if(language=='Maven'){
+                    let nodeComponentListItem9 = document.createElement("li");
+                    nodeComponentListItem9.appendChild(document.createTextNode('Logging: '+obj.Property_Scores["Logging"]));
+                    nodeComponentList2.appendChild(nodeComponentListItem9);
+                    let nodeComponentListItem10 = document.createElement("li");
+                    nodeComponentListItem10.appendChild(document.createTextNode('NullPointer: '+obj.Property_Scores["NullPointer"]));
+                    nodeComponentList2.appendChild(nodeComponentListItem10);
+                    let nodeComponentListItem11 = document.createElement("li");
+                    nodeComponentListItem11.appendChild(document.createTextNode('MisusedFunctionality: '+obj.Property_Scores["MisusedFunctionality"]));
+                    nodeComponentList2.appendChild(nodeComponentListItem11);
+                    let nodeComponentListItem12 = document.createElement("li");
+                    nodeComponentListItem12.appendChild(document.createTextNode('lcom: '+obj.Property_Scores["lcom"]));
+                    nodeComponentList2.appendChild(nodeComponentListItem12);
+                    let nodeComponentListItem13 = document.createElement("li");
+                    nodeComponentListItem13.appendChild(document.createTextNode('ExceptionHandling: '+obj.Property_Scores["ExceptionHandling"]));
+                    nodeComponentList2.appendChild(nodeComponentListItem13);
+                    let nodeComponentListItem14 = document.createElement("li");
+                    nodeComponentListItem14.appendChild(document.createTextNode('wmc: '+obj.Property_Scores["wmc"]));
+                    nodeComponentList2.appendChild(nodeComponentListItem14);
+                    let nodeComponentListItem15 = document.createElement("li");
+                    nodeComponentListItem15.appendChild(document.createTextNode('Assignment: '+obj.Property_Scores["Assignment"]));
+                    nodeComponentList2.appendChild(nodeComponentListItem15);
+                    let nodeComponentListItem16 = document.createElement("li");
+                    nodeComponentListItem16.appendChild(document.createTextNode('cbo: '+obj.Property_Scores["cbo"]));
+                    nodeComponentList2.appendChild(nodeComponentListItem16);
+                    let nodeComponentListItem17 = document.createElement("li");
+                    nodeComponentListItem17.appendChild(document.createTextNode('ResourceHandling: '+obj.Property_Scores["ResourceHandling"]));
+                    nodeComponentList2.appendChild(nodeComponentListItem17);
+                }
+            
+                divPropertyScoresCategory.appendChild(nodeComponentCategoryName2);
+                divPropertyScoresCategory.appendChild(nodeComponentList2);
+
+                metricsSecurityDiv.appendChild(divSonarQubeCategory);
+
+
+                //metrics
+                let divmetricsCategory = document.createElement("div");
+				divmetricsCategory.className = 'divMetricsCategorySecurity';
+
+                let nodeComponentCategoryName3 = document.createElement("i");
+				nodeComponentCategoryName3.appendChild(document.createTextNode("metrics"));
+
+                let nodeComponentList3 = document.createElement("ul");
+                let nodeComponentListItem18 = document.createElement("li");
+                nodeComponentListItem18.appendChild(document.createTextNode('ncloc: '+obj.metrics["ncloc"]));
+                nodeComponentList3.appendChild(nodeComponentListItem18);
+                let nodeComponentListItem19 = document.createElement("li");
+                nodeComponentListItem19.appendChild(document.createTextNode('vulnerabilities: '+obj.metrics["vulnerabilities"]));
+                nodeComponentList3.appendChild(nodeComponentListItem19);
+
+                divmetricsCategory.appendChild(nodeComponentCategoryName3);
+                divmetricsCategory.appendChild(nodeComponentList3);
+
+                metricsSecurityDiv.appendChild(divmetricsCategory);
+
+
+                //Characteristic_Scores
+                let divCharacteristic_ScoresCategory = document.createElement("div");
+				divCharacteristic_ScoresCategory.className = 'divMetricsCategorySecurity';
+
+                let nodeComponentCategoryName4 = document.createElement("i");
+				nodeComponentCategoryName4.appendChild(document.createTextNode("Characteristic_Scores"));
+
+                let nodeComponentList4 = document.createElement("ul");
+                let nodeComponentListItem20 = document.createElement("li");
+                nodeComponentListItem20.appendChild(document.createTextNode('Availability: '+obj.Characteristic_Scores["Availability"]));
+                nodeComponentList4.appendChild(nodeComponentListItem20);
+                let nodeComponentListItem21 = document.createElement("li");
+                nodeComponentListItem21.appendChild(document.createTextNode('Confidentiality: '+obj.Characteristic_Scores["Confidentiality"]));
+                nodeComponentList4.appendChild(nodeComponentListItem21);
+                let nodeComponentListItem22 = document.createElement("li");
+                nodeComponentListItem22.appendChild(document.createTextNode('Integrity: '+obj.Characteristic_Scores["Integrity"]));
+                nodeComponentList4.appendChild(nodeComponentListItem22);
+
+                divCharacteristic_ScoresCategory.appendChild(nodeComponentCategoryName4);
+                divCharacteristic_ScoresCategory.appendChild(nodeComponentList4);
+
+                metricsSecurityDiv.appendChild(divCharacteristic_ScoresCategory);
+
+                
+                if(language=='Maven'){
+                    //CK
+                    let divCKCategory = document.createElement("div");
+                    divCKCategory.className = 'divMetricsCategorySecurity';
+
+                    let nodeComponentCategoryName5 = document.createElement("i");
+                    nodeComponentCategoryName5.appendChild(document.createTextNode("CK"));
+
+                    let nodeComponentList5 = document.createElement("ul");
+                    let nodeComponentListItem23 = document.createElement("li");
+                    nodeComponentListItem23.appendChild(document.createTextNode('loc: '+obj.CK["loc"]));
+                    nodeComponentList5.appendChild(nodeComponentListItem23);
+                    let nodeComponentListItem24 = document.createElement("li");
+                    nodeComponentListItem24.appendChild(document.createTextNode('cbo: '+obj.CK["cbo"]));
+                    nodeComponentList5.appendChild(nodeComponentListItem24);
+                    let nodeComponentListItem25 = document.createElement("li");
+                    nodeComponentListItem25.appendChild(document.createTextNode('lcom: '+obj.CK["lcom"]));
+                    nodeComponentList5.appendChild(nodeComponentListItem25);
+                    let nodeComponentListItem26 = document.createElement("li");
+                    nodeComponentListItem26.appendChild(document.createTextNode('wmc: '+obj.CK["wmc"]));
+                    nodeComponentList5.appendChild(nodeComponentListItem26);
+
+                    divCKCategory.appendChild(nodeComponentCategoryName5);
+                    divCKCategory.appendChild(nodeComponentList5);
+
+                    metricsSecurityDiv.appendChild(divCKCategory);
+
+
+                    //PMD
+                    let divPMDCategory = document.createElement("div");
+                    divPMDCategory.className = 'divMetricsCategorySecurity';
+
+                    let nodeComponentCategoryName6 = document.createElement("i");
+                    nodeComponentCategoryName6.appendChild(document.createTextNode("PMD"));
+
+                    let nodeComponentList6 = document.createElement("ul");
+                    let nodeComponentListItem27 = document.createElement("li");
+                    nodeComponentListItem27.appendChild(document.createTextNode('Assignment: '+obj.PMD["Assignment"]));
+                    nodeComponentList6.appendChild(nodeComponentListItem27);
+                    let nodeComponentListItem28 = document.createElement("li");
+                    nodeComponentListItem28.appendChild(document.createTextNode('Logging: '+obj.PMD["Logging"]));
+                    nodeComponentList6.appendChild(nodeComponentListItem28);
+                    let nodeComponentListItem29 = document.createElement("li");
+                    nodeComponentListItem29.appendChild(document.createTextNode('NullPointer: '+obj.PMD["NullPointer"]));
+                    nodeComponentList6.appendChild(nodeComponentListItem29);
+                    let nodeComponentListItem30 = document.createElement("li");
+                    nodeComponentListItem30.appendChild(document.createTextNode('MisusedFunctionality: '+obj.PMD["MisusedFunctionality"]));
+                    nodeComponentList6.appendChild(nodeComponentListItem30);
+                    let nodeComponentListItem31 = document.createElement("li");
+                    nodeComponentListItem31.appendChild(document.createTextNode('ResourceHandling: '+obj.PMD["ResourceHandling"]));
+                    nodeComponentList6.appendChild(nodeComponentListItem31);
+                    let nodeComponentListItem32 = document.createElement("li");
+                    nodeComponentListItem32.appendChild(document.createTextNode('ExceptionHandling: '+obj.PMD["ExceptionHandling"]));
+                    nodeComponentList6.appendChild(nodeComponentListItem32);
+
+                    divPMDCategory.appendChild(nodeComponentCategoryName6);
+                    divPMDCategory.appendChild(nodeComponentList6);
+
+                    metricsSecurityDiv.appendChild(divPMDCategory);
+                }
+                
+            } catch(e) {
+                (document.getElementById("waitAnimation") as HTMLElement).style.display = "none";
+                console.log('err: ', e);
+            }
+            (document.getElementById("waitAnimation") as HTMLElement).style.display = "none";
+        })()
+    }
+
+
+    /**
+     * Vulnerability Assessment Endpoint
+     * @param messageService 
+     */
+	runprocessVulnerabilityAssessmentSecurity(messageService: MessageService){
         messageService.info('Security analysis started');
         //Wait animation start
 		(document.getElementById("waitAnimation") as HTMLElement).style.display = "block";
@@ -25,7 +300,7 @@
         //Get language
         var language = (document.getElementById("select-security-language") as HTMLSelectElement).value;
 
-		//Post
+		//Get
 		fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
             '/security/VulnerabilityAssessment?project='+SmartclideTdReusabilityTheiaWidget.state.SecurityProjectURL+'&lang='+language
                 , {
@@ -91,9 +366,15 @@
         
 		//waiting animation stop
 		(document.getElementById("waitAnimation") as HTMLElement).style.display = "none";
+        messageService.info('Security analysis finished');
 	}
 
-    //Chart for the persentage of vulnerable files
+
+    /**
+     * Chart for the persentage of vulnerable files
+     * @param vulnerable 
+     * @param nonVulnerable 
+     */
     createChart(vulnerable:number, nonVulnerable:number){
         type EChartsOption = echarts.EChartsOption;
 		if(this.myChartSecurity !== undefined){
