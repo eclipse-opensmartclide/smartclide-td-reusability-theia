@@ -89,12 +89,18 @@
 }
 
 .divMetricsCategorySecurity{
+	display: inline-grid;
 	border-style: solid;
   	border-width: thin;
   	margin: 5px;
 	padding: 2px;
 	border-color: #6a6a6a;
-	width: 150px;
+	width: 180px;
+}
+
+.ulSecurityMetrics{
+	list-style: none;
+	padding: 0;
 }
 
 /* TD Principal */

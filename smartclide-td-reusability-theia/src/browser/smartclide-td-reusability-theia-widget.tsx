@@ -194,12 +194,12 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 					<option value="python">Python</option>
 					<option value="javascript">JavaScript</option>
 				</select>
-				<button className='theia-button secondary' title='Make Vulnerability Assessment' onClick={_a => securityInstance.runprocessVulnerabilityAssessmentSecurity(this.messageService)}>Make Vulnerabilit yAssessment</button>
+				<button className='theia-button secondary' title='Make Vulnerability Assessment' onClick={_a => securityInstance.runprocessVulnerabilityAssessmentSecurity(this.messageService)}>Make Vulnerability Assessment</button>
 				<button className='theia-button secondary' title='Make Security Analysis' onClick={_a => securityInstance.runprocessAnalyzeSecurity(this.messageService)}>Make Security Analysis</button>
 				<div id='waitAnimationSecurity' className="lds-dual-ring"></div>
 				<div id='vulnerabilityAssessment_Endpoint_Security'>
 					<p id='indexSecurity'></p>
-					<div id='chartSecurity' style={{height:'100px', margin:'0 auto'}}></div>
+					<div id='chartSecurity' style={{display:'none', height:'100px', margin:'0 auto'}}></div>
 					<div id='resultsSecurity'></div>
 				</div>
 				<div id='analyze_Endpoint_Security'>

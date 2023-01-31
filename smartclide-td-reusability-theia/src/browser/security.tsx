@@ -76,7 +76,7 @@
 
                 //Security_index
                 let p_Security_index = document.createElement("p");
-                p_Security_index.appendChild(document.createTextNode("Security index: "+obj.Security_index["Security_index"]));
+                p_Security_index.appendChild(document.createTextNode("Security index: "+(obj.Security_index["Security_Index"]).toFixed(2)));
                 metricsSecurityDiv.appendChild(p_Security_index);
 
 
@@ -88,22 +88,23 @@
 				nodeComponentCategoryName.appendChild(document.createTextNode("Sonarqube"));
 
                 let nodeComponentList = document.createElement("ul");
+                nodeComponentList.className = 'ulSecurityMetrics';
                 if(language=='Javascript' || language=='Maven'){
                     let nodeComponentListItem1 = document.createElement("li");
-                    nodeComponentListItem1.appendChild(document.createTextNode('insecure-conf: '+obj.Sonarqube["insecure-conf"]));
+                    nodeComponentListItem1.appendChild(document.createTextNode('insecure-conf: '+(obj.Sonarqube["insecure-conf"]).toFixed(2)));
                     nodeComponentList.appendChild(nodeComponentListItem1);
                     let nodeComponentListItem2 = document.createElement("li");
-                    nodeComponentListItem2.appendChild(document.createTextNode('auth: '+obj.Sonarqube["auth"]));
+                    nodeComponentListItem2.appendChild(document.createTextNode('auth: '+(obj.Sonarqube["auth"]).toFixed(2)));
                     nodeComponentList.appendChild(nodeComponentListItem2);
                 }
                 let nodeComponentListItem3 = document.createElement("li");
-                nodeComponentListItem3.appendChild(document.createTextNode('weak-cryptography: '+obj.Sonarqube["weak-cryptography"]));
+                nodeComponentListItem3.appendChild(document.createTextNode('weak-cryptography: '+(obj.Sonarqube["weak-cryptography"]).toFixed(2)));
                 nodeComponentList.appendChild(nodeComponentListItem3);
                 let nodeComponentListItem4 = document.createElement("li");
-                nodeComponentListItem4.appendChild(document.createTextNode('dos: '+obj.Sonarqube["dos"]));
+                nodeComponentListItem4.appendChild(document.createTextNode('dos: '+(obj.Sonarqube["dos"]).toFixed(2)));
                 nodeComponentList.appendChild(nodeComponentListItem4);
                 let nodeComponentListItem5 = document.createElement("li");
-                nodeComponentListItem5.appendChild(document.createTextNode('sql-injection: '+obj.Sonarqube["sql-injection"]));
+                nodeComponentListItem5.appendChild(document.createTextNode('sql-injection: '+(obj.Sonarqube["sql-injection"]).toFixed(2)));
                 nodeComponentList.appendChild(nodeComponentListItem5);
 
                 divSonarQubeCategory.appendChild(nodeComponentCategoryName);
@@ -120,50 +121,51 @@
 				nodeComponentCategoryName2.appendChild(document.createTextNode("Property_Scores"));
 
                 let nodeComponentList2 = document.createElement("ul");
+                nodeComponentList2.className = 'ulSecurityMetrics';
                 if(language=='Javascript' || language=='Maven'){
                     let nodeComponentListItem1 = document.createElement("li");
-                    nodeComponentListItem1.appendChild(document.createTextNode('insecure-conf: '+obj.Property_Scores["insecure-conf"]));
+                    nodeComponentListItem1.appendChild(document.createTextNode('insecure-conf: '+(obj.Property_Scores["insecure-conf"]).toFixed(2)));
                     nodeComponentList2.appendChild(nodeComponentListItem1);
                     let nodeComponentListItem2 = document.createElement("li");
-                    nodeComponentListItem2.appendChild(document.createTextNode('auth: '+obj.Property_Scores["auth"]));
+                    nodeComponentListItem2.appendChild(document.createTextNode('auth: '+(obj.Property_Scores["auth"]).toFixed(2)));
                     nodeComponentList2.appendChild(nodeComponentListItem2);
                 }
                 let nodeComponentListItem6 = document.createElement("li");
-                nodeComponentListItem6.appendChild(document.createTextNode('weak-cryptography: '+obj.Property_Scores["weak-cryptography"]));
+                nodeComponentListItem6.appendChild(document.createTextNode('weak-cryptography: '+(obj.Property_Scores["weak-cryptography"]).toFixed(2)));
                 nodeComponentList2.appendChild(nodeComponentListItem6);
                 let nodeComponentListItem7 = document.createElement("li");
-                nodeComponentListItem7.appendChild(document.createTextNode('dos: '+obj.Property_Scores["dos"]));
+                nodeComponentListItem7.appendChild(document.createTextNode('dos: '+(obj.Property_Scores["dos"]).toFixed(2)));
                 nodeComponentList2.appendChild(nodeComponentListItem7);
                 let nodeComponentListItem8 = document.createElement("li");
-                nodeComponentListItem8.appendChild(document.createTextNode('sql-injection: '+obj.Property_Scores["sql-injection"]));
+                nodeComponentListItem8.appendChild(document.createTextNode('sql-injection: '+(obj.Property_Scores["sql-injection"]).toFixed(2)));
                 nodeComponentList2.appendChild(nodeComponentListItem8);
                 if(language=='Maven'){
                     let nodeComponentListItem9 = document.createElement("li");
-                    nodeComponentListItem9.appendChild(document.createTextNode('Logging: '+obj.Property_Scores["Logging"]));
+                    nodeComponentListItem9.appendChild(document.createTextNode('Logging: '+(obj.Property_Scores["Logging"]).toFixed(2)));
                     nodeComponentList2.appendChild(nodeComponentListItem9);
                     let nodeComponentListItem10 = document.createElement("li");
-                    nodeComponentListItem10.appendChild(document.createTextNode('NullPointer: '+obj.Property_Scores["NullPointer"]));
+                    nodeComponentListItem10.appendChild(document.createTextNode('NullPointer: '+(obj.Property_Scores["NullPointer"]).toFixed(2)));
                     nodeComponentList2.appendChild(nodeComponentListItem10);
                     let nodeComponentListItem11 = document.createElement("li");
-                    nodeComponentListItem11.appendChild(document.createTextNode('MisusedFunctionality: '+obj.Property_Scores["MisusedFunctionality"]));
+                    nodeComponentListItem11.appendChild(document.createTextNode('MisusedFunctionality: '+(obj.Property_Scores["MisusedFunctionality"]).toFixed(2)));
                     nodeComponentList2.appendChild(nodeComponentListItem11);
                     let nodeComponentListItem12 = document.createElement("li");
-                    nodeComponentListItem12.appendChild(document.createTextNode('lcom: '+obj.Property_Scores["lcom"]));
+                    nodeComponentListItem12.appendChild(document.createTextNode('lcom: '+(obj.Property_Scores["lcom"]).toFixed(2)));
                     nodeComponentList2.appendChild(nodeComponentListItem12);
                     let nodeComponentListItem13 = document.createElement("li");
-                    nodeComponentListItem13.appendChild(document.createTextNode('ExceptionHandling: '+obj.Property_Scores["ExceptionHandling"]));
+                    nodeComponentListItem13.appendChild(document.createTextNode('ExceptionHandling: '+(obj.Property_Scores["ExceptionHandling"]).toFixed(2)));
                     nodeComponentList2.appendChild(nodeComponentListItem13);
                     let nodeComponentListItem14 = document.createElement("li");
-                    nodeComponentListItem14.appendChild(document.createTextNode('wmc: '+obj.Property_Scores["wmc"]));
+                    nodeComponentListItem14.appendChild(document.createTextNode('wmc: '+(obj.Property_Scores["wmc"]).toFixed(2)));
                     nodeComponentList2.appendChild(nodeComponentListItem14);
                     let nodeComponentListItem15 = document.createElement("li");
-                    nodeComponentListItem15.appendChild(document.createTextNode('Assignment: '+obj.Property_Scores["Assignment"]));
+                    nodeComponentListItem15.appendChild(document.createTextNode('Assignment: '+(obj.Property_Scores["Assignment"]).toFixed(2)));
                     nodeComponentList2.appendChild(nodeComponentListItem15);
                     let nodeComponentListItem16 = document.createElement("li");
-                    nodeComponentListItem16.appendChild(document.createTextNode('cbo: '+obj.Property_Scores["cbo"]));
+                    nodeComponentListItem16.appendChild(document.createTextNode('cbo: '+(obj.Property_Scores["cbo"]).toFixed(2)));
                     nodeComponentList2.appendChild(nodeComponentListItem16);
                     let nodeComponentListItem17 = document.createElement("li");
-                    nodeComponentListItem17.appendChild(document.createTextNode('ResourceHandling: '+obj.Property_Scores["ResourceHandling"]));
+                    nodeComponentListItem17.appendChild(document.createTextNode('ResourceHandling: '+(obj.Property_Scores["ResourceHandling"]).toFixed(2)));
                     nodeComponentList2.appendChild(nodeComponentListItem17);
                 }
             
@@ -181,11 +183,12 @@
 				nodeComponentCategoryName3.appendChild(document.createTextNode("metrics"));
 
                 let nodeComponentList3 = document.createElement("ul");
+                nodeComponentList3.className = 'ulSecurityMetrics';
                 let nodeComponentListItem18 = document.createElement("li");
-                nodeComponentListItem18.appendChild(document.createTextNode('ncloc: '+obj.metrics["ncloc"]));
+                nodeComponentListItem18.appendChild(document.createTextNode('ncloc: '+(obj.metrics["ncloc"]).toFixed(2)));
                 nodeComponentList3.appendChild(nodeComponentListItem18);
                 let nodeComponentListItem19 = document.createElement("li");
-                nodeComponentListItem19.appendChild(document.createTextNode('vulnerabilities: '+obj.metrics["vulnerabilities"]));
+                nodeComponentListItem19.appendChild(document.createTextNode('vulnerabilities: '+(obj.metrics["vulnerabilities"]).toFixed(2)));
                 nodeComponentList3.appendChild(nodeComponentListItem19);
 
                 divmetricsCategory.appendChild(nodeComponentCategoryName3);
@@ -202,14 +205,15 @@
 				nodeComponentCategoryName4.appendChild(document.createTextNode("Characteristic_Scores"));
 
                 let nodeComponentList4 = document.createElement("ul");
+                nodeComponentList4.className = 'ulSecurityMetrics';
                 let nodeComponentListItem20 = document.createElement("li");
-                nodeComponentListItem20.appendChild(document.createTextNode('Availability: '+obj.Characteristic_Scores["Availability"]));
+                nodeComponentListItem20.appendChild(document.createTextNode('Availability: '+(obj.Characteristic_Scores["Availability"]).toFixed(2)));
                 nodeComponentList4.appendChild(nodeComponentListItem20);
                 let nodeComponentListItem21 = document.createElement("li");
-                nodeComponentListItem21.appendChild(document.createTextNode('Confidentiality: '+obj.Characteristic_Scores["Confidentiality"]));
+                nodeComponentListItem21.appendChild(document.createTextNode('Confidentiality: '+(obj.Characteristic_Scores["Confidentiality"]).toFixed(2)));
                 nodeComponentList4.appendChild(nodeComponentListItem21);
                 let nodeComponentListItem22 = document.createElement("li");
-                nodeComponentListItem22.appendChild(document.createTextNode('Integrity: '+obj.Characteristic_Scores["Integrity"]));
+                nodeComponentListItem22.appendChild(document.createTextNode('Integrity: '+(obj.Characteristic_Scores["Integrity"]).toFixed(2)));
                 nodeComponentList4.appendChild(nodeComponentListItem22);
 
                 divCharacteristic_ScoresCategory.appendChild(nodeComponentCategoryName4);
@@ -227,17 +231,18 @@
                     nodeComponentCategoryName5.appendChild(document.createTextNode("CK"));
 
                     let nodeComponentList5 = document.createElement("ul");
+                    nodeComponentList5.className = 'ulSecurityMetrics';
                     let nodeComponentListItem23 = document.createElement("li");
-                    nodeComponentListItem23.appendChild(document.createTextNode('loc: '+obj.CK["loc"]));
+                    nodeComponentListItem23.appendChild(document.createTextNode('loc: '+(obj.CK["loc"]).toFixed(2)));
                     nodeComponentList5.appendChild(nodeComponentListItem23);
                     let nodeComponentListItem24 = document.createElement("li");
-                    nodeComponentListItem24.appendChild(document.createTextNode('cbo: '+obj.CK["cbo"]));
+                    nodeComponentListItem24.appendChild(document.createTextNode('cbo: '+(obj.CK["cbo"]).toFixed(2)));
                     nodeComponentList5.appendChild(nodeComponentListItem24);
                     let nodeComponentListItem25 = document.createElement("li");
-                    nodeComponentListItem25.appendChild(document.createTextNode('lcom: '+obj.CK["lcom"]));
+                    nodeComponentListItem25.appendChild(document.createTextNode('lcom: '+(obj.CK["lcom"]).toFixed(2)));
                     nodeComponentList5.appendChild(nodeComponentListItem25);
                     let nodeComponentListItem26 = document.createElement("li");
-                    nodeComponentListItem26.appendChild(document.createTextNode('wmc: '+obj.CK["wmc"]));
+                    nodeComponentListItem26.appendChild(document.createTextNode('wmc: '+(obj.CK["wmc"]).toFixed(2)));
                     nodeComponentList5.appendChild(nodeComponentListItem26);
 
                     divCKCategory.appendChild(nodeComponentCategoryName5);
@@ -254,23 +259,24 @@
                     nodeComponentCategoryName6.appendChild(document.createTextNode("PMD"));
 
                     let nodeComponentList6 = document.createElement("ul");
+                    nodeComponentList6.className = 'ulSecurityMetrics';
                     let nodeComponentListItem27 = document.createElement("li");
-                    nodeComponentListItem27.appendChild(document.createTextNode('Assignment: '+obj.PMD["Assignment"]));
+                    nodeComponentListItem27.appendChild(document.createTextNode('Assignment: '+(obj.PMD["Assignment"]).toFixed(2)));
                     nodeComponentList6.appendChild(nodeComponentListItem27);
                     let nodeComponentListItem28 = document.createElement("li");
-                    nodeComponentListItem28.appendChild(document.createTextNode('Logging: '+obj.PMD["Logging"]));
+                    nodeComponentListItem28.appendChild(document.createTextNode('Logging: '+(obj.PMD["Logging"]).toFixed(2)));
                     nodeComponentList6.appendChild(nodeComponentListItem28);
                     let nodeComponentListItem29 = document.createElement("li");
-                    nodeComponentListItem29.appendChild(document.createTextNode('NullPointer: '+obj.PMD["NullPointer"]));
+                    nodeComponentListItem29.appendChild(document.createTextNode('NullPointer: '+(obj.PMD["NullPointer"]).toFixed(2)));
                     nodeComponentList6.appendChild(nodeComponentListItem29);
                     let nodeComponentListItem30 = document.createElement("li");
-                    nodeComponentListItem30.appendChild(document.createTextNode('MisusedFunctionality: '+obj.PMD["MisusedFunctionality"]));
+                    nodeComponentListItem30.appendChild(document.createTextNode('MisusedFunctionality: '+(obj.PMD["MisusedFunctionality"]).toFixed(2)));
                     nodeComponentList6.appendChild(nodeComponentListItem30);
                     let nodeComponentListItem31 = document.createElement("li");
-                    nodeComponentListItem31.appendChild(document.createTextNode('ResourceHandling: '+obj.PMD["ResourceHandling"]));
+                    nodeComponentListItem31.appendChild(document.createTextNode('ResourceHandling: '+(obj.PMD["ResourceHandling"]).toFixed(2)));
                     nodeComponentList6.appendChild(nodeComponentListItem31);
                     let nodeComponentListItem32 = document.createElement("li");
-                    nodeComponentListItem32.appendChild(document.createTextNode('ExceptionHandling: '+obj.PMD["ExceptionHandling"]));
+                    nodeComponentListItem32.appendChild(document.createTextNode('ExceptionHandling: '+(obj.PMD["ExceptionHandling"]).toFixed(2)));
                     nodeComponentList6.appendChild(nodeComponentListItem32);
 
                     divPMDCategory.appendChild(nodeComponentCategoryName6);
@@ -376,6 +382,7 @@
      * @param nonVulnerable 
      */
     createChart(vulnerable:number, nonVulnerable:number){
+        (document.getElementById("waitAnimation") as HTMLElement).style.display = "block";
         type EChartsOption = echarts.EChartsOption;
 		if(this.myChartSecurity !== undefined){
 			this.myChartSecurity.dispose();
