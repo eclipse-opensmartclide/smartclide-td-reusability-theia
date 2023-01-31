@@ -64,6 +64,30 @@
 	display: none;
 }
 
+resultsSecurity{
+	margin-left: 10px;
+    margin-right: 10px;
+    max-width: 100%;
+}
+
+.divFileSecurity{
+	border-style: solid;
+  	border-width: thin;
+  	margin: 5px;
+	padding: 2px;
+	border-color: #6a6a6a;
+}
+
+.divFileSecurity i{
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+.divFileSecurity span{
+	float: right;
+	font-size: 14px;
+}
+
 /* TD Principal */
 #endpointResultsList{
 	display: none;

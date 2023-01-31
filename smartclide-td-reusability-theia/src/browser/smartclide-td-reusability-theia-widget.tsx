@@ -194,13 +194,14 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 				<AlertMessage type='INFO' header={header4} />
 				<input onChange={this.updateInput} placeholder='Project URL' name='SecurityProjectURL'/>
 				<select id="select-security-language" style={{marginLeft:'10px'}}>
-					<option value="Java">Java</option>
+					<option value="Maven">Java</option>
 					<option value="Python">Python</option>
-					<option value="JavaScript">JavaScript</option>
+					<option value="Javascript">JavaScript</option>
 				</select>
 				<button className='theia-button secondary' title='Make Security Analysis' onClick={_a => securityInstance.runprocessAnalyzeSecurity(this.messageService)}>Make Security Analysis</button>
 				<div id='waitAnimationSecurity' className="lds-dual-ring"></div>
 				<p id='indexSecurity'></p>
+				<div id='chartSecurity' style={{width:'150px', height:'150px'}}></div>
 				<div id='resultsSecurity'></div>
 			</div>
 		</div>
