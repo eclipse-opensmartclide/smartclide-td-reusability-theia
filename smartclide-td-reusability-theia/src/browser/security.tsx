@@ -23,7 +23,7 @@
     runprocessAnalyzeSecurity(messageService: MessageService){
         messageService.info('Security analysis started');
         //Wait animation start
-		(document.getElementById("waitAnimation") as HTMLElement).style.display = "block";
+		(document.getElementById("waitAnimationSecurity") as HTMLElement).style.display = "block";
 
         //Get language
         var languageFromSelect = (document.getElementById("select-security-language") as HTMLSelectElement).value;
@@ -311,11 +311,12 @@
                     }
                 }
 
+                (document.getElementById("waitAnimationSecurity") as HTMLElement).style.display = "none";
+                messageService.info('Security analysis finished');
             } catch(e) {
-                (document.getElementById("waitAnimation") as HTMLElement).style.display = "none";
+                (document.getElementById("waitAnimationSecurity") as HTMLElement).style.display = "none";
                 console.log('err: ', e);
             }
-            (document.getElementById("waitAnimation") as HTMLElement).style.display = "none";
         })()
     }
 
@@ -364,7 +365,7 @@
 	runprocessVulnerabilityAssessmentSecurity(messageService: MessageService){
         messageService.info('Security analysis started');
         //Wait animation start
-		(document.getElementById("waitAnimation") as HTMLElement).style.display = "block";
+		(document.getElementById("waitAnimationSecurity") as HTMLElement).style.display = "block";
 
         //Get language
         var language = (document.getElementById("select-security-language") as HTMLSelectElement).value;
@@ -426,16 +427,17 @@
             else{
                 pSecurity.appendChild(document.createTextNode("No vulnerable files found"));
             }
+            
+            //waiting animation stop
+            (document.getElementById("waitAnimationSecurity") as HTMLElement).style.display = "none";
+            messageService.info('Security analysis finished');
         })
         .catch(err => { 
+            (document.getElementById("waitAnimationSecurity") as HTMLElement).style.display = "none";
             (document.getElementById("indexSecurity") as HTMLElement).style.display = "none";
             messageService.info('Error: '+err);
             console.log('err: ', err);
         });
-        
-		//waiting animation stop
-		(document.getElementById("waitAnimation") as HTMLElement).style.display = "none";
-        messageService.info('Security analysis finished');
 	}
 
 
@@ -445,7 +447,6 @@
      * @param nonVulnerable 
      */
     createChart(vulnerable:number, nonVulnerable:number){
-        (document.getElementById("waitAnimation") as HTMLElement).style.display = "block";
         type EChartsOption = echarts.EChartsOption;
 		if(this.myChartSecurity !== undefined){
 			this.myChartSecurity.dispose();
