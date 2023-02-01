@@ -297,7 +297,7 @@
                 //Create list of issues
                 if(obj.Hotspots["weak-cryptography"]!=undefined){
                     if(obj.Hotspots["weak-cryptography"].length>0){
-                        this.createIssue(obj, issuesSecurityDiv, "weak cryptography");
+                        this.createIssue(obj, issuesSecurityDiv, "weak-cryptography");
                     }
                 }
                 if(obj.Hotspots["dos"]!=undefined){
@@ -307,7 +307,7 @@
                 }
                 if(obj.Hotspots["insecure-conf"]!=undefined){
                     if(obj.Hotspots["insecure-conf"].length>0){
-                        this.createIssue(obj, issuesSecurityDiv, "insecure conf");
+                        this.createIssue(obj, issuesSecurityDiv, "insecure-conf");
                     }
                 }
 
@@ -327,10 +327,12 @@
      */
     createIssue(obj:any, issuesSecurityDiv: HTMLElement, categoryName:string){
         let nodeCategory = document.createElement("p");
-        nodeCategory.appendChild(document.createTextNode(categoryName));
+        nodeCategory.appendChild(document.createTextNode(categoryName.replace("-"," ")));
+        nodeCategory.style.fontStyle="italic";
+        nodeCategory.style.fontWeight="600";
         issuesSecurityDiv.appendChild(nodeCategory);
 
-        for(let i of obj.Hotspots["weak-cryptography"]){
+        for(let i of obj.Hotspots[categoryName]){
             var severity= i.vulnerabilityProbability;
             var message= i.message;
             var re = /(.*)[:]/;
