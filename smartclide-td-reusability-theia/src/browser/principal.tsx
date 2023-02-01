@@ -194,28 +194,31 @@ export class Principal {
 			
 			//crate HTMLElement for each issue
 			for (let issue of principalReportEndpoints[i].issueList) {
-				var severity = issue.issueSeverity;
-				var message = issue.issueName;
-				//var debt= i.debt;
-				var re = /(.*)[:]/;
-				var component = issue.issueDirectory.replace(re, "");
-				var line = issue.issueStartLine;
-
-				let divIssue = document.createElement("div");
-				divIssue.className = 'divIssue';
-
-				let nodeComponent = document.createElement("i");
-				nodeComponent.appendChild(document.createTextNode(component+"\xa0\xa0\xa0L:"+ line));
-				let nodeSeverity = document.createElement("span");
-				nodeSeverity.appendChild(document.createTextNode(severity));
-				let nodeMessage = document.createElement("p");
-				nodeMessage.appendChild(document.createTextNode(message));
-
-				divIssue.appendChild(nodeComponent);
-				divIssue.appendChild(nodeSeverity);
-				divIssue.appendChild(nodeMessage);
-				endpointIssuesDiv.appendChild(divIssue);
+				if(issue.issueSeverity=='BLOCKER'){
+					this.addIssuetoDiv(endpointIssuesDiv, issue);
+				}
 			}
+			for (let issue of principalReportEndpoints[i].issueList) {
+				if(issue.issueSeverity=='CRITICAL'){
+					this.addIssuetoDiv(endpointIssuesDiv, issue);
+				}
+			}
+			for (let issue of principalReportEndpoints[i].issueList) {
+				if(issue.issueSeverity=='MAJOR'){
+					this.addIssuetoDiv(endpointIssuesDiv, issue);
+				}
+			}
+			for (let issue of principalReportEndpoints[i].issueList) {
+				if(issue.issueSeverity=='MINOR'){
+					this.addIssuetoDiv(endpointIssuesDiv, issue);
+				}
+			}
+			for (let issue of principalReportEndpoints[i].issueList) {
+				if(issue.issueSeverity=='INFO'){
+					this.addIssuetoDiv(endpointIssuesDiv, issue);
+				}
+			}
+			
 			endpointLi.appendChild(endpointIssuesDiv);
 			endpointList.appendChild(endpointLi);
 		}
@@ -342,31 +345,33 @@ export class Principal {
 				//console.log(obj.p);
 				
 				(document.getElementById('issues') as HTMLElement).innerHTML= "";
-				
-				//crate HTMLElement for each issue
+				let issuesDiv = document.getElementById('issues')!
+
+				//crate HTMLElement for each issue per sevirity
 				for(let i of obj){
-					var severity= i.issueSeverity;
-					var message= i.issueName;
-					//var debt= i.debt;
-					var re = /(.*)[:]/;
-					var component= i.issueDirectory.replace(re, "");
-					var line = i.issueStartLine;
-					
-					let issuesDiv = document.getElementById('issues')!
-					let divIssue = document.createElement("div");
-					divIssue.className = 'divIssue';
-					
-					let nodeComponent = document.createElement("i");
-					nodeComponent.appendChild(document.createTextNode(component+"\xa0\xa0\xa0L:"+line));
-					let nodeSeverity = document.createElement("span");
-					nodeSeverity.appendChild(document.createTextNode(severity));
-					let nodeMessage = document.createElement("p");
-					nodeMessage.appendChild(document.createTextNode(message));
-					
-					divIssue.appendChild(nodeComponent);
-					divIssue.appendChild(nodeSeverity);
-					divIssue.appendChild(nodeMessage);
-					issuesDiv.appendChild(divIssue);
+					if(i.issueSeverity=='BLOCKER'){
+						this.addIssuetoDiv(issuesDiv, i);
+					}
+				}
+				for(let i of obj){
+					if(i.issueSeverity=='CRITICAL'){
+						this.addIssuetoDiv(issuesDiv, i);
+					}
+				}
+				for(let i of obj){
+					if(i.issueSeverity=='MAJOR'){
+						this.addIssuetoDiv(issuesDiv, i);
+					}
+				}
+				for(let i of obj){
+					if(i.issueSeverity=='MINOR'){
+						this.addIssuetoDiv(issuesDiv, i);
+					}
+				}
+				for(let i of obj){
+					if(i.issueSeverity=='INFO'){
+						this.addIssuetoDiv(issuesDiv, i);
+					}
 				}
 			})
 			.catch(err => { 
@@ -415,6 +420,35 @@ export class Principal {
 				}
 			})()
 		}
+	}
+
+	/**
+	 * Create Issue inside the issue list
+	 * @param issuesDiv 
+	 * @param i 
+	 */
+	addIssuetoDiv(issuesDiv: HTMLElement, i: any) {
+		var severity= i.issueSeverity;
+		var message= i.issueName;
+		//var debt= i.debt;
+		var re = /(.*)[:]/;
+		var component= i.issueDirectory.replace(re, "");
+		var line = i.issueStartLine;
+		
+		let divIssue = document.createElement("div");
+		divIssue.className = 'divIssue';
+		
+		let nodeComponent = document.createElement("i");
+		nodeComponent.appendChild(document.createTextNode(component+"\xa0\xa0\xa0L:"+line));
+		let nodeSeverity = document.createElement("span");
+		nodeSeverity.appendChild(document.createTextNode(severity));
+		let nodeMessage = document.createElement("p");
+		nodeMessage.appendChild(document.createTextNode(message));
+		
+		divIssue.appendChild(nodeComponent);
+		divIssue.appendChild(nodeSeverity);
+		divIssue.appendChild(nodeMessage);
+		issuesDiv.appendChild(divIssue);
 	}
 
 	static async postPrincipalNewAnalysis(data: { gitURL:string; } | {gitURL:string, token:string}): Promise<number> {
