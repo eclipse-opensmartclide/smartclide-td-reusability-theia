@@ -204,6 +204,7 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 				</div>
 				<div id='analyze_Endpoint_Security'>
 					<div id='metricsSecurity'></div>
+					<button id='show-hide-security-issues' className='theia-button secondary' title='show-hide issues' onClick={_a => securityInstance.showhideIssues(this.messageService)} style={{display:'none'}}>Hide Issues</button>
 					<div id='listofSecurityIssues'></div>
 				</div>
 			</div>
