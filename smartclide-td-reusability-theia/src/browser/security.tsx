@@ -447,6 +447,7 @@
      * @param nonVulnerable 
      */
     createChart(vulnerable:number, nonVulnerable:number){
+        (document.getElementById("chartSecurity") as HTMLElement).style.display = 'block';
         type EChartsOption = echarts.EChartsOption;
 		if(this.myChartSecurity !== undefined){
 			this.myChartSecurity.dispose();
