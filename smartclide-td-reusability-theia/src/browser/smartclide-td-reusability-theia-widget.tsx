@@ -94,6 +94,10 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		//Send a message to inform SmartCLIDE IDE
 		let message = buildMessage(messageTypes.COMPONENT_HELLO);
 		window.parent.postMessage(message, "*");
+
+		//Get env variable from backend
+		var tmp = await this.backendService.getEnvironmentVariable();
+		console.log("Log from postConstruct: "+tmp);
     }
 
 	//After Detach Remove Listener
