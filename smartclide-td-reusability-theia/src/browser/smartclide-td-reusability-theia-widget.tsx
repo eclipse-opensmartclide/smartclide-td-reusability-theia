@@ -69,19 +69,10 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 			console.log("td-reusability: RECEIVED", JSON.stringify(data, undefined, 4));
 			window.removeEventListener("message", this.handleTokenInfo);
 			break;
-		  default:
-			break;
-		}
-	}
-
-	//Handle one time COMM_START_REPLY message from parent
-	handleCommStart = ({data}:any) => {
-		switch (data.type) {
 		  case messageTypes.COMM_START_REPLY:
 			console.log("td-reusability: RECEIVED", JSON.stringify(data, undefined, 4));
 			SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken = data.content.token;
 			SmartclideTdReusabilityTheiaWidget.state.stateServiceID = data.content.serviceID;
-			window.removeEventListener("message", this.handleCommStart);
 			break;
 		  default:
 			break;
@@ -105,9 +96,6 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 
 		//Add even listener to get the Keycloak Token
 		window.addEventListener("message", this.handleTokenInfo);
-
-		//Add even listener to get the Keycloak Token and Service id on start
-		window.addEventListener("message", this.handleCommStart);
 
 		//Send a message to inform SmartCLIDE IDE
 		let message = buildMessage(messageTypes.COMM_START);
