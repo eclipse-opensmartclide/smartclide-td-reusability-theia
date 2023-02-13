@@ -42,7 +42,8 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		InterestFileNumber: '',
 		ReusabilityProjectURL: '',
 		SecurityProjectURL: '',
-		stateKeycloakToken: ''
+		stateKeycloakToken: '',
+		stateServiceID: ''
 	}
 	
 	static statePrincipalEndpoints=[{fileName: '', endpointMethod: ''}]
@@ -57,16 +58,30 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 
 	static myChart:any;
 
-	//Handle TOKEN_INFO message from parent
+	//Handle KEYCLOAK_TOKEN message from parent
 	handleTokenInfo = ({data}:any) => {
 		switch (data.type) {
-		  case messageTypes.TOKEN_INFO:
+		  case messageTypes.KEYCLOAK_TOKEN:
 			console.log("td-reusability: RECEIVED", JSON.stringify(data, undefined, 4));
-			SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken = data.content;
+			SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken = data.content.token;
 			break;
-		  case messageTypes.TOKEN_REVOKE:
+		  case messageTypes.COMM_END:
 			console.log("td-reusability: RECEIVED", JSON.stringify(data, undefined, 4));
 			window.removeEventListener("message", this.handleTokenInfo);
+			break;
+		  default:
+			break;
+		}
+	}
+
+	//Handle one time COMM_START_REPLY message from parent
+	handleCommStart = ({data}:any) => {
+		switch (data.type) {
+		  case messageTypes.COMM_START_REPLY:
+			console.log("td-reusability: RECEIVED", JSON.stringify(data, undefined, 4));
+			SmartclideTdReusabilityTheiaWidget.state.stateKeycloakToken = data.content.token;
+			SmartclideTdReusabilityTheiaWidget.state.stateServiceID = data.content.serviceID;
+			window.removeEventListener("message", this.handleCommStart);
 			break;
 		  default:
 			break;
@@ -91,8 +106,11 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		//Add even listener to get the Keycloak Token
 		window.addEventListener("message", this.handleTokenInfo);
 
+		//Add even listener to get the Keycloak Token and Service id on start
+		window.addEventListener("message", this.handleCommStart);
+
 		//Send a message to inform SmartCLIDE IDE
-		let message = buildMessage(messageTypes.COMPONENT_HELLO);
+		let message = buildMessage(messageTypes.COMM_START);
 		window.parent.postMessage(message, "*");
 
 		//Get env variable from backend

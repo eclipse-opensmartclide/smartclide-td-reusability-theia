@@ -10,7 +10,7 @@
   ],
   "dependencies": {
     "@theia/core": "latest",
-    "@unparallel/smartclide-frontend-comm": "0.4.0",
+    "@unparallel/smartclide-frontend-comm": "1.0.1",
     "echarts": "^5.3.3",
     "prop-types": "15.8.1",
     "react": "16.6.3",

@@ -1951,10 +1951,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@unparallel/smartclide-frontend-comm@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@unparallel/smartclide-frontend-comm/-/smartclide-frontend-comm-0.4.0.tgz#a3e97a957048285487c8bfe0613d706d68586ccd"
-  integrity sha512-SFelZP4Yx3ERlXVIGSdHlq7oi1T4oaL3VYXxrLzaQvYKAOi2sJKAqrsNOhy6WVBSfd+0hsTCSdWISYJ6/RibJg==
+"@unparallel/smartclide-frontend-comm@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@unparallel/smartclide-frontend-comm/-/smartclide-frontend-comm-1.0.1.tgz#10b07f16e2bfe4650d01d0ab56e1cea3a785215a"
+  integrity sha512-HnRksXhc+FJmIBS0ii5BM09+Ug5G8OHJeq80x7s/N5gcFPR9gQOrm6qplhno44Vxth3HVRNeL12h9NkC82zF6g==
 
 "@vscode/codicons@*":
   version "0.0.31"
