@@ -15,7 +15,7 @@ import { BackendService } from "../common/protocol";
 export class BackendServiceImpl implements BackendService {
     
     getEnvironmentVariable(): Promise<string> {
-        var response= "env SMARTCLIDE_BACKEND_URL: "+ process.env.SMARTCLIDE_BACKEND_URL;
+        var response= ""+ process.env.SMARTCLIDE_BACKEND_URL;
 
         return new Promise<string>(resolve => resolve(response))
     }

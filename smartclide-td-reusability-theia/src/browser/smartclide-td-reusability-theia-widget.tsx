@@ -102,8 +102,8 @@ export class SmartclideTdReusabilityTheiaWidget extends ReactWidget {
 		window.parent.postMessage(message, "*");
 
 		//Get env variable from backend
-		var tmp = await this.backendService.getEnvironmentVariable();
-		console.log("Log from postConstruct: "+tmp);
+		SmartclideTdReusabilityTheiaWidget.state.BackEndHost = await this.backendService.getEnvironmentVariable();
+		console.log("BackEnd Host: "+SmartclideTdReusabilityTheiaWidget.state.BackEndHost);
     }
 
 	//After Detach Remove Listener

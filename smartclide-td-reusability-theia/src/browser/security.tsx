@@ -51,11 +51,17 @@
                     "dos":[0,0.024419175132769336,2.2172949002217297],"weak-cryptography":[0,0.0015070136414874827,0.1989258006763477],
                     "auth":[0,0.024207864640426639,3.0959752321981428],"insecure-conf":[0,0.7356100591012389,32.05128205128205]}};
         
+        //Fix project URL if is invalid
+        var projectURL = SmartclideTdReusabilityTheiaWidget.state.SecurityProjectURL;
+        if(!projectURL.endsWith(".git")){
+            projectURL=projectURL+".git";
+        }
+
         //Send Post request
         (async () => {
             try {
                 const response = await fetch(SmartclideTdReusabilityTheiaWidget.state.BackEndHost+
-                    '/security/analyze?url=' +SmartclideTdReusabilityTheiaWidget.state.SecurityProjectURL+ '&language='+language, 
+                    '/security/analyze?url=' +projectURL+ '&language='+language, 
                     { method: 'post',
                     headers: {
                         'Accept': '*/*',
